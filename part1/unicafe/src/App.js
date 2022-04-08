@@ -9,7 +9,7 @@ const App = () =>
 
   return (
     <div>
-      code here 
+      code here
     </div>
   )
 }
