@@ -1,85 +1,88 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 //import componentname from workingdirectory
 
 const App = () =>
 {
   const [ persons, setPersons ] = useState( [
-    {
-      name: 'Arto Hellas',
-      number: '999-000-000'
-    },
+    { name: 'Arto Hellas', number: '999-000-000', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
     { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ] )
-  const [ shownPersons, setShownPersons ] = useState( persons ) //todo reafctor
-  const [ newName, setNewName ] = useState( '' )
-  const [ newNumber, setNewNumber ] = useState( '' )
-  // console.log( 'object: %O', persons );
-  //submit --> onClick ? react handles it? - event preventDefault does
+
+  const [ filter, setFilter ] = useState( '' )
+
   return (
     <div>
       <h2>Phonebook</h2>
       <div>
-        filter shown with <input //refactor 
+        filter shown with <input
           onChange={ ( event ) =>
           {
-            if ( event.target.value === null )
-            {
-              setShownPersons( persons )
-            }
-            else
-            {
-              const filter = new RegExp( `${ event.target.value }`, 'i' )//idea: set only this here and use it in Numbers display below
-              console.log( filter )
-              setShownPersons( persons.filter( p => p.name.match( filter ) ) )//and remove this ; make new encapsulated var for display in Numbers
-            }
+            setFilter( new RegExp( `${ event.target.value }`, 'i' ) )
           } } />
       </div>
       <h2>add a new</h2>
-      <form onSubmit={ ( event ) =>
-      {
-        event.preventDefault()
-        if ( persons.every( p => p.name !== newName ) )
-        {
-          setShownPersons( [ ...persons, { name: newName, number: newNumber } ] ) //setPersons - doesnt re-render on submit
-          setPersons( [ ...persons, { name: newName, number: newNumber } ] )
-          console.log( persons )
-          console.log( shownPersons )
-        }
-        else
-        {
-          //alert( `${ newName } is already added to the phonebook` )
-        }
-      } }>
-        <div>
-          name: <input //component - number needs input checking - with callback or builtin validation
-            value={ newName }
-            onChange={ ( event ) =>
-            {
-              setNewName( event.target.value )
-            } } />
-          <br />
-          number: <input
-            value={ newNumber }
-            onChange={ ( event ) =>
-            {
-              setNewNumber( event.target.value )
-            } } />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form >
+      <PersonForm persons={ persons } setPersons={ setPersons } />
       <h2>Numbers</h2>
-      <div>
-        {
-          shownPersons === null //todo refactor: look above idea ; if filter -> shownPersons (filteredPersons?) ; render only on first load ; shownPersons !== persons
-            ? persons.map( p => <div>{ p.name } { p.number }</div> )
-            : shownPersons.map( p => <div>{ p.name } { p.number }</div> )
-        }
-      </div>
+      <DisplayNumbers peopleArr={ persons } filter={ filter } />
     </div >
+  )
+}
+
+const PersonForm = ( props ) =>
+{
+  const [ newName, setNewName ] = useState( '' )
+  const [ newNumber, setNewNumber ] = useState( '' )
+
+  const submitFunc = ( event ) =>
+  {
+    event.preventDefault()
+    if ( props.persons.every( p => p.name !== newName ) )
+    {
+      props.setPersons( [ ...props.persons, { name: newName, number: newNumber } ] ) //slow
+      console.log( props.persons )
+    }
+    else
+    {
+      alert( `${ newName } is already added to the phonebook` )
+    }
+  }
+
+  return (
+    <form onSubmit={ submitFunc }>
+      <div>
+        name: <input
+          value={ newName }
+          onChange={ ( event ) =>
+          {
+            setNewName( event.target.value )
+          } } />
+        <br />
+        number: <input
+          value={ newNumber }
+          onChange={ ( event ) =>
+          {
+            setNewNumber( event.target.value )
+          } } />
+      </div>
+      <div>
+        <button type="submit">add</button>
+      </div>
+    </form >
+  )
+}
+
+const DisplayNumbers = ( props ) =>
+{
+  const display = props.peopleArr
+    .filter( p => p.name.match( props.filter ) )
+    .map( p =>
+      <div>{ p.name } { p.number }</div>
+    )
+
+  return (
+    <>{ display }</>
   )
 }
 
