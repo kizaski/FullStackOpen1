@@ -105,12 +105,13 @@ const DisplayNumbers = ( props ) =>
       {
         if ( window.confirm( 'ok' ) )
         {
-          personService.remove( p.id )
-          // personService.getAll().then( response =>
-          // {
-          //   console.log( 'promise fulfilled' )
-          //   props.setPersons( response.data )
-          // } )
+          personService
+            .remove( p.id )
+            .then( () =>
+            {
+              props.setPersons( props.persons.filter( pp => pp.id !== p.id ) )
+            } )
+          // .catch( error => {} )
         }
       } }>delete</button> </div>
     )
