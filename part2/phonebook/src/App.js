@@ -103,7 +103,7 @@ const DisplayNumbers = ( props ) =>
     .map( p =>
       <div>{ p.name } { p.number } <button onClick={ () =>
       {
-        if ( window.confirm( 'ok' ) )
+        if ( window.confirm( `Delete ${p.name}?` ) )
         {
           personService
             .remove( p.id )
