@@ -43,7 +43,7 @@ const App = () =>
       <h2>add a new</h2>
       <PersonForm persons={ persons } setPersons={ setPersons } />
       <h2>Numbers</h2>
-      <DisplayNumbers peopleArr={ persons } filter={ filter } />
+      <DisplayNumbers persons={ persons } setPersons={ setPersons } filter={ filter } />
     </div >
   )
 }
@@ -98,10 +98,21 @@ const PersonForm = ( props ) =>
 
 const DisplayNumbers = ( props ) =>
 {
-  const display = props.peopleArr
+  const display = props.persons
     .filter( p => p.name.match( props.filter ) )
     .map( p =>
-      <div>{ p.name } { p.number }</div>
+      <div>{ p.name } { p.number } <button onClick={ () =>
+      {
+        if ( window.confirm( 'ok' ) )
+        {
+          personService.remove( p.id )
+          // personService.getAll().then( response =>
+          // {
+          //   console.log( 'promise fulfilled' )
+          //   props.setPersons( response.data )
+          // } )
+        }
+      } }>delete</button> </div>
     )
 
   return (
