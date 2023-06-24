@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 //todo import componentname from workingdirectory
+import personService from './services/persons'
 
 const App = () =>
 {
@@ -19,10 +20,10 @@ const App = () =>
   {
     console.log( 'effect' )
 
-    axios.get( 'http://localhost:3001/db' ).then( response =>
+    personService.getAll().then( response =>
     {
       console.log( 'promise fulfilled' )
-      setPersons( response.data.persons )
+      setPersons( response.data )
     } )
   }, [] )
 
@@ -61,10 +62,12 @@ const PersonForm = ( props ) =>
     {
       props.setPersons( [ ...props.persons, newPerson ] ) //slow
       // console.log( props.persons )
-      axios.post( 'http://localhost:3001/persons', newPerson ).then( response => { console.log( response ) } )
+      // axios.post( 'http://localhost:3001/persons', newPerson ).then( response => { console.log( response ) } )
+      personService.create( newPerson ).then( response => { console.log( response ) } )
     }
     else
     {
+      //edit
       alert( `${ newName } is already added to the phonebook` )
     }
   }
