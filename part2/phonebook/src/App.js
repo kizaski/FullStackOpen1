@@ -52,13 +52,16 @@ const PersonForm = ( props ) =>
   const [ newName, setNewName ] = useState( '' )
   const [ newNumber, setNewNumber ] = useState( '' )
 
+  const newPerson = { name: newName, number: newNumber }
+
   const submitFunc = ( event ) =>
   {
     event.preventDefault()
     if ( props.persons.every( p => p.name !== newName ) )
     {
-      props.setPersons( [ ...props.persons, { name: newName, number: newNumber } ] ) //slow
-      console.log( props.persons )
+      props.setPersons( [ ...props.persons, newPerson ] ) //slow
+      // console.log( props.persons )
+      axios.post( 'http://localhost:3001/persons', newPerson ).then( response => { console.log( response ) } )
     }
     else
     {
