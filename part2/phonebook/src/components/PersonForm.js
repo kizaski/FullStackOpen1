@@ -14,15 +14,19 @@ const PersonForm = ( props ) =>
     if ( props.persons.every( p => p.name !== newName ) )
     {
       props.setPersons( [ ...props.persons, newPerson ] )
-      personService.create( newPerson ).then( response => { console.log( response ) } )
+      personService.create( newPerson ) //.then( response => { console.log( response ) } )
     }
     else
     {
-      //edit
-      // alert( `${ newName } is already added to the phonebook` )
-      if ( window.confirm( `${ props.persons.name } is laready added to the phonebook. Replace the old one?` ) )
+      const dupe = props.persons.find( p => p.name == newName )
+
+      if ( window.confirm( `${ dupe.name } is already added to the phonebook. Replace the old one?` ) )
       {
-        personService.update( props.persons.id, newPerson )
+        personService.update( dupe.id, newPerson ).then( response =>
+        {
+          console.log( response )
+        } )
+        // props.persons.splice( props.persons.indexOf( dupe ), 1, dupe. )
       }
     }
   }
