@@ -1,0 +1,54 @@
+import { react, useState } from 'react'
+import personService from '../services/persons'
+
+const PersonForm = ( props ) =>
+{
+  const [ newName, setNewName ] = useState( '' )
+  const [ newNumber, setNewNumber ] = useState( '' )
+
+  const newPerson = { name: newName, number: newNumber }
+
+  const submitFunc = ( event ) =>
+  {
+    event.preventDefault()
+    if ( props.persons.every( p => p.name !== newName ) )
+    {
+      props.setPersons( [ ...props.persons, newPerson ] )
+      personService.create( newPerson ).then( response => { console.log( response ) } )
+    }
+    else
+    {
+      //edit
+      // alert( `${ newName } is already added to the phonebook` )
+      if ( window.confirm( `${ props.persons.name } is laready added to the phonebook. Replace the old one?` ) )
+      {
+        personService.update( props.persons.id, newPerson )
+      }
+    }
+  }
+
+  return (
+    <form onSubmit={ submitFunc }>
+      <div>
+        name: <input
+          value={ newName }
+          onChange={ ( event ) =>
+          {
+            setNewName( event.target.value )
+          } } />
+        <br />
+        number: <input
+          value={ newNumber }
+          onChange={ ( event ) =>
+          {
+            setNewNumber( event.target.value )
+          } } />
+      </div>
+      <div>
+        <button type="submit">add</button>
+      </div>
+    </form >
+  )
+}
+
+export default PersonForm

@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-//todo import componentname from workingdirectory
 import personService from './services/persons'
+import DisplayNumbers from './components/DisplayNumbers'
+import PersonForm from './components/PersonForm'
+
+//Todo
+//move components in separate file
+//refactor
 
 const App = () =>
 {
@@ -45,79 +50,6 @@ const App = () =>
       <h2>Numbers</h2>
       <DisplayNumbers persons={ persons } setPersons={ setPersons } filter={ filter } />
     </div >
-  )
-}
-
-const PersonForm = ( props ) =>
-{
-  const [ newName, setNewName ] = useState( '' )
-  const [ newNumber, setNewNumber ] = useState( '' )
-
-  const newPerson = { name: newName, number: newNumber }
-
-  const submitFunc = ( event ) =>
-  {
-    event.preventDefault()
-    if ( props.persons.every( p => p.name !== newName ) )
-    {
-      props.setPersons( [ ...props.persons, newPerson ] ) //slow
-      // console.log( props.persons )
-      // axios.post( 'http://localhost:3001/persons', newPerson ).then( response => { console.log( response ) } )
-      personService.create( newPerson ).then( response => { console.log( response ) } )
-    }
-    else
-    {
-      //edit
-      alert( `${ newName } is already added to the phonebook` )
-    }
-  }
-
-  return (
-    <form onSubmit={ submitFunc }>
-      <div>
-        name: <input
-          value={ newName }
-          onChange={ ( event ) =>
-          {
-            setNewName( event.target.value )
-          } } />
-        <br />
-        number: <input
-          value={ newNumber }
-          onChange={ ( event ) =>
-          {
-            setNewNumber( event.target.value )
-          } } />
-      </div>
-      <div>
-        <button type="submit">add</button>
-      </div>
-    </form >
-  )
-}
-
-const DisplayNumbers = ( props ) =>
-{
-  const display = props.persons
-    .filter( p => p.name.match( props.filter ) )
-    .map( p =>
-      <div>{ p.name } { p.number } <button onClick={ () =>
-      {
-        if ( window.confirm( `Delete ${p.name}?` ) )
-        {
-          personService
-            .remove( p.id )
-            .then( () =>
-            {
-              props.setPersons( props.persons.filter( pp => pp.id !== p.id ) )
-            } )
-          // .catch( error => {} )
-        }
-      } }>delete</button> </div>
-    )
-
-  return (
-    <>{ display }</>
   )
 }
 
