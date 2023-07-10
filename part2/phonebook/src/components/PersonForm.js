@@ -11,7 +11,7 @@ const PersonForm = ( props ) =>
 
   const newPerson = { name: newName, number: newNumber }
 
-  const submitFunc = ( event ) =>
+  const submitPerson = ( event ) =>
   {
     event.preventDefault()
     if ( persons.every( p => p.name !== newName ) )
@@ -38,7 +38,7 @@ const PersonForm = ( props ) =>
   const numberInput = ( event ) => { setNewNumber( event.target.value ) }
 
   return (
-    <form onSubmit={ submitFunc }>
+    <form onSubmit={ submitPerson }>
       <div>
         name: <input
           value={ newName }
