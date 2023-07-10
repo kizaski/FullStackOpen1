@@ -34,22 +34,19 @@ const PersonForm = ( props ) =>
     }
   }
 
+  const nameInput = ( event ) => { setNewName( event.target.value ) }
+  const numberInput = ( event ) => { setNewNumber( event.target.value ) }
+
   return (
     <form onSubmit={ submitFunc }>
       <div>
         name: <input
           value={ newName }
-          onChange={ ( event ) =>
-          {
-            setNewName( event.target.value )
-          } } />
+          onChange={ nameInput } />
         <br />
         number: <input
           value={ newNumber }
-          onChange={ ( event ) =>
-          {
-            setNewNumber( event.target.value )
-          } } />
+          onChange={ numberInput } />
       </div>
       <div>
         <button type="submit">add</button>

@@ -7,26 +7,26 @@ const DisplayNumbers = ( props ) =>
   const setPersons = props.setPersons
   const filter = props.filter
 
-  const display = persons
-    .filter( p => p.name.match( filter ) )
-    .map( p =>
-      <div>{ p.name } { p.number } <button onClick={ () =>
-      {
-        if ( window.confirm( `Delete ${ p.name }?` ) )
+  const deleteClick = () =>
+  {
+    if ( window.confirm( `Delete ${ p.name }?` ) )
+    {
+      personService
+        .remove( p.id )
+        .then( () =>
         {
-          personService
-            .remove( p.id )
-            .then( () =>
-            {
-              setPersons( persons.filter( pp => pp.id !== p.id ) )
-            } )
-          // .catch( error => {} )
-        }
-      } }>delete</button> </div>
-    )
+          setPersons( persons.filter( pp => pp.id !== p.id ) )
+        } )
+    }
+  }
+
+  const filteredPersons = persons.filter( p => p.name.match( filter ) )
 
   return (
-    <>{ display }</>
+    <>{ filteredPersons.map( ( p ) =>
+      <div>{ p.name } { p.number } <button onClick={ deleteClick }>delete</button> </div>
+    ) }
+    </>
   )
 }
 
