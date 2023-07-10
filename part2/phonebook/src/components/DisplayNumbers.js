@@ -3,8 +3,12 @@ import personService from '../services/persons'
 
 const DisplayNumbers = ( props ) =>
 {
-  const display = props.persons
-    .filter( p => p.name.match( props.filter ) )
+  const persons = props.persons
+  const setPersons = props.setPersons
+  const filter = props.filter
+
+  const display = persons
+    .filter( p => p.name.match( filter ) )
     .map( p =>
       <div>{ p.name } { p.number } <button onClick={ () =>
       {
@@ -14,7 +18,7 @@ const DisplayNumbers = ( props ) =>
             .remove( p.id )
             .then( () =>
             {
-              props.setPersons( props.persons.filter( pp => pp.id !== p.id ) )
+              setPersons( persons.filter( pp => pp.id !== p.id ) )
             } )
           // .catch( error => {} )
         }

@@ -3,6 +3,9 @@ import personService from '../services/persons'
 
 const PersonForm = ( props ) =>
 {
+  const persons = props.persons
+  const setPersons = props.setPersons
+
   const [ newName, setNewName ] = useState( '' )
   const [ newNumber, setNewNumber ] = useState( '' )
 
@@ -11,9 +14,9 @@ const PersonForm = ( props ) =>
   const submitFunc = ( event ) =>
   {
     event.preventDefault()
-    if ( props.persons.every( p => p.name !== newName ) )
+    if ( persons.every( p => p.name !== newName ) )
     {
-      props.setPersons( [ ...props.persons, newPerson ] )
+      setPersons( [ ...persons, newPerson ] )
       personService.create( newPerson ) //.then( response => { console.log( response ) } )
     }
     else
