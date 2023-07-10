@@ -34,16 +34,16 @@ const App = () =>
 
   console.log( 'render', persons.length, 'notes' )
 
+  const filterInput = ( event ) =>
+  {
+    setFilter( new RegExp( `${ event.target.value }`, 'i' ) )
+  } 
 
   return (
     <div>
       <h2>Phonebook</h2>
       <div>
-        filter shown with <input
-          onChange={ ( event ) =>
-          {
-            setFilter( new RegExp( `${ event.target.value }`, 'i' ) )
-          } } />
+        filter shown with <input onChange={ filterInput } />
       </div>
       <h2>add a new</h2>
       <PersonForm persons={ persons } setPersons={ setPersons } />
