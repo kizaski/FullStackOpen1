@@ -2,23 +2,27 @@ import React from 'react'
 import personService from '../services/persons'
 
 const DisplayNumbers = ( props ) =>
-{
-  const display = props.persons
-    .filter( p => p.name.match( props.filter ) )
-    .map( p =>
-      <div>{ p.name } { p.number } <button onClick={ () =>
-      {
-        if ( window.confirm( `Delete ${ p.name }?` ) )
+{ 
+  const persons = props.persons
+  const setPersons = props.setPersons
+  const filter = props.filter
+
+  const deletePerson = person => {
+    if ( window.confirm( `Delete ${ person.name }?` ) )
+    {
+      personService
+        .remove( person.id )
+        .then( () =>
         {
-          personService
-            .remove( p.id )
-            .then( () =>
-            {
-              props.setPersons( props.persons.filter( pp => pp.id !== p.id ) )
-            } )
-          // .catch( error => {} )
-        }
-      } }>delete</button> </div>
+          setPersons( persons.filter( pp => pp.id !== person.id ) )
+        } )
+    }
+  } 
+
+  const display = props.persons
+    .filter( p => p.name.match( filter ) )
+    .map( p =>
+      <div>{ p.name } { p.number } <button onClick={ () => deletePerson(p) }>delete</button> </div>
     )
 
   return (
