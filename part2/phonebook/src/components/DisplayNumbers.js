@@ -3,30 +3,26 @@ import personService from '../services/persons'
 
 const DisplayNumbers = ( props ) =>
 {
-  const persons = props.persons
-  const setPersons = props.setPersons
-  const filter = props.filter
-
-  const deleteClick = () =>
-  {
-    if ( window.confirm( `Delete ${ p.name }?` ) )
-    {
-      personService
-        .remove( p.id )
-        .then( () =>
+  const display = props.persons
+    .filter( p => p.name.match( props.filter ) )
+    .map( p =>
+      <div>{ p.name } { p.number } <button onClick={ () =>
+      {
+        if ( window.confirm( `Delete ${ p.name }?` ) )
         {
-          setPersons( persons.filter( pp => pp.id !== p.id ) )
-        } )
-    }
-  }
-
-  const filteredPersons = persons.filter( p => p.name.match( filter ) )
+          personService
+            .remove( p.id )
+            .then( () =>
+            {
+              props.setPersons( props.persons.filter( pp => pp.id !== p.id ) )
+            } )
+          // .catch( error => {} )
+        }
+      } }>delete</button> </div>
+    )
 
   return (
-    <>{ filteredPersons.map( ( p ) =>
-      <div>{ p.name } { p.number } <button onClick={ deleteClick }>delete</button> </div>
-    ) }
-    </>
+    <>{ display }</>
   )
 }
 

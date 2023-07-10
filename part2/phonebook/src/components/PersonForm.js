@@ -14,6 +14,8 @@ const PersonForm = ( props ) =>
   const submitPerson = ( event ) =>
   {
     event.preventDefault()
+
+
     if ( persons.every( p => p.name !== newName ) )
     {
       setPersons( [ ...persons, newPerson ] )
@@ -32,6 +34,8 @@ const PersonForm = ( props ) =>
         // props.persons.splice( props.persons.indexOf( dupe ), 1, dupe. )
       }
     }
+
+    
   }
 
   const nameInput = ( event ) => { setNewName( event.target.value ) }
