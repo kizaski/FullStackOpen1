@@ -3,6 +3,8 @@ import axios from 'axios'
 import personService from './services/persons'
 import DisplayNumbers from './components/DisplayNumbers'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
+import './index.css'
 
 //Todo
 //move components in separate file
@@ -20,6 +22,7 @@ const App = () =>
   */
   const [ persons, setPersons ] = useState( [] )
   const [ filter, setFilter ] = useState( '' )
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect( () =>
   {
@@ -41,6 +44,7 @@ const App = () =>
 
   return (
     <div>
+      <Notification message={errorMessage} />
       <h2>Phonebook</h2>
       <div>
         filter shown with <input onChange={ filterInput } />
