@@ -1,3 +1,4 @@
+import Course from "./components/Course";
 
 const App = () =>
 {
@@ -46,49 +47,13 @@ const App = () =>
     }
   ]
 
-  // const total = parts.reduce( ( s, p ) => s + p.exercises, 0 )
-  const total = 0
-
   return (
     <div>
-      <Header course={ course } />
-      <Content parts={ parts } />
-      <Total sum={ total } />
+      { courses.map( ( course ) => (
+        <Course key={ course.id } course={ course } />
+      ) ) }
     </div>
   )
 }
-
-const Header = ( { course } ) =>
-{
-  <h1>{ course }</h1>
-}
-
-const Total = ( { sum } ) =>
-{
-  <p>Number of exercises { sum }</p>
-}
-
-const Part = ( { part } ) =>
-{
-  <p>
-    { part.name } { part.exercises }
-  </p>
-}
-
-const Content = ( { parts } ) =>
-{
-  <>
-    <Part
-      part={ parts[ 0 ] }
-    />
-    <Part
-      part={ parts[ 1 ] }
-    />
-    <Part
-      part={ parts[ 2 ] }
-    />
-  </>
-}
-
 
 export default App
