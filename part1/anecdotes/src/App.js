@@ -30,18 +30,20 @@ function App ()
     <div className="App">
       <header className="App-header">
         <RandomAnecdote arr={ anecdotes } sel={ selected } nex={ next } />
-        <img src={ logo } className="App-logo" alt="logo" />
+
       </header>
     </div>
   );
 }
 
-const RandomAnecdote = ( props ) =>
+const RandomAnecdote = ( { arr, sel, nex } ) =>
 {
   return (
     <div>
-      <p>{ props.arr[ props.sel ] }</p>
-      <button onClick={ props.nex }>next anecdote</button>
+      <p>{ arr[ sel ] }</p>
+      <button onClick={ nex }>next anecdote</button>
+      <p> Has <span>00</span> votes</p>
+      <button>vote</button>
     </div>
   )
 }
