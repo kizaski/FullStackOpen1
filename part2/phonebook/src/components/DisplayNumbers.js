@@ -8,7 +8,7 @@ const DisplayNumbers = ( props ) =>
   const filter = props.filter
 
   const deletePerson = person => {
-    if ( window.confirm( `Delete ${ person.name }?` ) )
+    if ( window.confirm( `Delete ${ person.name }, id: ${ person.id }?` ) )
     {
       personService
         .remove( person.id )

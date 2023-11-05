@@ -9,37 +9,36 @@ const PersonForm = ( props ) =>
   const [ newName, setNewName ] = useState( '' )
   const [ newNumber, setNewNumber ] = useState( '' )
 
+  const nameInput = ( event ) => { setNewName( event.target.value ) }
+  const numberInput = ( event ) => { setNewNumber( event.target.value ) }
+
   const newPerson = { name: newName, number: newNumber }
 
   const submitPerson = ( event ) =>
   {
     event.preventDefault()
 
-
     if ( persons.every( p => p.name !== newName ) )
     {
-      setPersons( [ ...persons, newPerson ] )
-      personService.create( newPerson ) //.then( response => { console.log( response ) } )
+      personService.create( newPerson ).then( response =>
+      {
+        console.log( "personService.create response.data: ", response.data )
+        setPersons( [ ...persons, response.data ] )
+      } )
     }
     else
     {
       const dupe = props.persons.find( p => p.name == newName )
-
       if ( window.confirm( `${ dupe.name } is already added to the phonebook. Replace the old one?` ) )
       {
         personService.update( dupe.id, newPerson ).then( response =>
         {
-          console.log( response )
+          console.log( "personService.update response.data: ", response.data )
+          setPersons(persons.map(person => person.id !== dupe.id ? person : response.data))
         } )
-        // props.persons.splice( props.persons.indexOf( dupe ), 1, dupe. )
       }
     }
-
-    
   }
-
-  const nameInput = ( event ) => { setNewName( event.target.value ) }
-  const numberInput = ( event ) => { setNewNumber( event.target.value ) }
 
   return (
     <form onSubmit={ submitPerson }>
