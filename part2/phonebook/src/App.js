@@ -22,7 +22,8 @@ const App = () =>
   */
   const [ persons, setPersons ] = useState( [] )
   const [ filter, setFilter ] = useState( '' )
-  const [ errorMessage, setErrorMessage ] = useState( null )
+  const [ message, setMessage ] = useState( null )
+  const [ messageType, setMessageType ] = useState( '' )
 
   useEffect( () =>
   {
@@ -46,15 +47,15 @@ const App = () =>
   // separate logic from UI
   return (
     <div>
-      <Notification message={ errorMessage } />
+      <Notification message={ message } type={ messageType } />
       <h2>Phonebook</h2>
       <div>
         filter shown with <input onChange={ filterInput } />
       </div>
       <h2>add a new</h2>
-      <PersonForm persons={ persons } setPersons={ setPersons } setErrorMessage={ setErrorMessage } />
+      <PersonForm persons={ persons } setPersons={ setPersons } setMessage={ setMessage } setMessageType={ setMessageType } />
       <h2>Numbers</h2>
-      <DisplayNumbers persons={ persons } setPersons={ setPersons } filter={ filter } setErrorMessage={ setErrorMessage } />
+      <DisplayNumbers persons={ persons } setPersons={ setPersons } filter={ filter } setMessage={ setMessage } setMessageType={ setMessageType } />
     </div >
   )
 }

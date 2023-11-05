@@ -22,6 +22,10 @@ const PersonForm = ( props ) =>
     {
       personService.create( newPerson ).then( response =>
       {
+        props.setMessageType( "info" )
+        props.setMessage( `Added person '${ newPerson.name }'` )
+        setTimeout( () => { props.setMessage( null ) }, 5000 )
+
         console.log( "personService.create response.data: ", response.data )
         setPersons( [ ...persons, response.data ] )
       } )
@@ -33,12 +37,18 @@ const PersonForm = ( props ) =>
       {
         personService.update( dupe.id, newPerson ).then( response =>
         {
+          props.setMessageType( "info" )
+          props.setMessage( `Updated person '${ newPerson.name }'` )
+          setTimeout( () => { props.setMessage( null ) }, 5000 )
+
           console.log( "personService.update response.data: ", response.data )
           setPersons( persons.map( person => person.id !== dupe.id ? person : response.data ) )
         } ).catch( error =>
         {
-          props.setErrorMessage( `Person '${ newPerson }' was already removed from server` )
-          setTimeout( () => { props.setErrorMessage( null ) }, 5000 )
+          props.setMessageType( "error" )
+          props.setMessage( `Person '${ newPerson }' was already removed from server` )
+          setTimeout( () => { props.setMessage( null ) }, 5000 )
+          
           setPersons( persons.filter( p => p.id !== dupe.id ) )
         } )
       }

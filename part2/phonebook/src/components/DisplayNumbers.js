@@ -18,8 +18,9 @@ const DisplayNumbers = ( props ) =>
           setPersons( persons.filter( pp => pp.id !== person.id ) )
         } ).catch( error =>
         {
-          props.setErrorMessage( `Person '${ person.name }' was already removed from server` )
-          setTimeout( () => { props.setErrorMessage( null ) }, 5000 )
+          props.setMessageType( "error" )
+          props.setMessage( `Person '${ person.name }' was already removed from server` )
+          setTimeout( () => { props.setMessage( null ) }, 5000 )
           setPersons( persons.filter( pp => pp.id !== person.id ) )
         } )
     }
