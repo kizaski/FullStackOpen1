@@ -1,3 +1,7 @@
+# info 
+
+Run with `npm run start` and `npx json-server --port 3001 --watch db.json`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
