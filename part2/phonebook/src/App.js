@@ -22,7 +22,7 @@ const App = () =>
   */
   const [ persons, setPersons ] = useState( [] )
   const [ filter, setFilter ] = useState( '' )
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [ errorMessage, setErrorMessage ] = useState( null )
 
   useEffect( () =>
   {
@@ -40,19 +40,21 @@ const App = () =>
   const filterInput = ( event ) =>
   {
     setFilter( new RegExp( `${ event.target.value }`, 'i' ) )
-  } 
+  }
 
+  // To Do
+  // separate logic from UI
   return (
     <div>
-      <Notification message={errorMessage} />
+      <Notification message={ errorMessage } />
       <h2>Phonebook</h2>
       <div>
         filter shown with <input onChange={ filterInput } />
       </div>
       <h2>add a new</h2>
-      <PersonForm persons={ persons } setPersons={ setPersons } />
+      <PersonForm persons={ persons } setPersons={ setPersons } setErrorMessage={ setErrorMessage } />
       <h2>Numbers</h2>
-      <DisplayNumbers persons={ persons } setPersons={ setPersons } filter={ filter } />
+      <DisplayNumbers persons={ persons } setPersons={ setPersons } filter={ filter } setErrorMessage={ setErrorMessage } />
     </div >
   )
 }

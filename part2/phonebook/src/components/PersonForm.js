@@ -34,7 +34,12 @@ const PersonForm = ( props ) =>
         personService.update( dupe.id, newPerson ).then( response =>
         {
           console.log( "personService.update response.data: ", response.data )
-          setPersons(persons.map(person => person.id !== dupe.id ? person : response.data))
+          setPersons( persons.map( person => person.id !== dupe.id ? person : response.data ) )
+        } ).catch( error =>
+        {
+          props.setErrorMessage( `Person '${ newPerson }' was already removed from server` )
+          setTimeout( () => { props.setErrorMessage( null ) }, 5000 )
+          setPersons( persons.filter( p => p.id !== dupe.id ) )
         } )
       }
     }
