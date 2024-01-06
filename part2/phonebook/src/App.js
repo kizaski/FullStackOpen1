@@ -43,8 +43,18 @@ const App = () =>
     setFilter( new RegExp( `${ event.target.value }`, 'i' ) )
   }
 
-  // To Do
-  // separate logic from UI
+  const handleSetPersons = (data) => {
+    setPersons(data)
+  }
+
+  const handleSetMessage = (data) => {
+    setMessage(data)
+  }
+
+  const handleSetMessageType = (data) => {
+    setMessageType(data)
+  }
+
   return (
     <div>
       <Notification message={ message } type={ messageType } />
@@ -53,9 +63,9 @@ const App = () =>
         filter shown with <input onChange={ filterInput } />
       </div>
       <h2>add a new</h2>
-      <PersonForm persons={ persons } setPersons={ setPersons } setMessage={ setMessage } setMessageType={ setMessageType } />
+      <PersonForm persons={ persons } setPersons={ handleSetPersons } setMessage={ handleSetMessage } setMessageType={ handleSetMessageType } />
       <h2>Numbers</h2>
-      <DisplayNumbers persons={ persons } setPersons={ setPersons } filter={ filter } setMessage={ setMessage } setMessageType={ setMessageType } />
+      <DisplayNumbers persons={ persons } setPersons={ handleSetPersons } filter={ filter } setMessage={ handleSetMessage } setMessageType={ handleSetMessageType } />
     </div >
   )
 }

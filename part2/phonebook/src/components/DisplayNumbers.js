@@ -15,12 +15,18 @@ const DisplayNumbers = ( props ) =>
         .remove( person.id )
         .then( () =>
         {
+          props.setMessageType( "info" )
+          props.setMessage( `Deleted person '${ person.name }'` )
+          setTimeout( () => { props.setMessage( null ) }, 5000 )
+
           setPersons( persons.filter( pp => pp.id !== person.id ) )
-        } ).catch( error =>
+        } )
+        .catch( error =>
         {
           props.setMessageType( "error" )
           props.setMessage( `Person '${ person.name }' was already removed from server` )
           setTimeout( () => { props.setMessage( null ) }, 5000 )
+
           setPersons( persons.filter( pp => pp.id !== person.id ) )
         } )
     }

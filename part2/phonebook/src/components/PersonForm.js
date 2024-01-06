@@ -35,22 +35,25 @@ const PersonForm = ( props ) =>
       const dupe = props.persons.find( p => p.name == newName )
       if ( window.confirm( `${ dupe.name } is already added to the phonebook. Replace the old one?` ) )
       {
-        personService.update( dupe.id, newPerson ).then( response =>
-        {
-          props.setMessageType( "info" )
-          props.setMessage( `Updated person '${ newPerson.name }'` )
-          setTimeout( () => { props.setMessage( null ) }, 5000 )
+        personService
+          .update( dupe.id, newPerson )
+          .then( response =>
+          {
+            props.setMessageType( "info" )
+            props.setMessage( `Updated person '${ newPerson.name }'` )
+            setTimeout( () => { props.setMessage( null ) }, 5000 )
 
-          console.log( "personService.update response.data: ", response.data )
-          setPersons( persons.map( person => person.id !== dupe.id ? person : response.data ) )
-        } ).catch( error =>
-        {
-          props.setMessageType( "error" )
-          props.setMessage( `Person '${ newPerson }' was already removed from server` )
-          setTimeout( () => { props.setMessage( null ) }, 5000 )
-          
-          setPersons( persons.filter( p => p.id !== dupe.id ) )
-        } )
+            console.log( "personService.update response.data: ", response.data )
+            setPersons( persons.map( person => person.id !== dupe.id ? person : response.data ) )
+          } )
+          .catch( error =>
+          {
+            props.setMessageType( "error" )
+            props.setMessage( `Person '${ newPerson }' was already removed from server` )
+            setTimeout( () => { props.setMessage( null ) }, 5000 )
+            
+            setPersons( persons.filter( p => p.id !== dupe.id ) )
+          } )
       }
     }
   }
