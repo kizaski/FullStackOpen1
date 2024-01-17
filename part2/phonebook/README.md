@@ -2,6 +2,8 @@
 
 Run with `npm run start` and `npx json-server --port 3001 --watch db.json`
 
+Check src/services/persons.js and change the url if persons don't load.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
